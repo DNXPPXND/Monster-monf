@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
@@ -9,8 +9,10 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
+  
+  // 🟢 เพิ่ม State เช็คสถานะ Login (ในอนาคตใช้ดึงจาก Context หรือ Auth Library)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // ✅ 1. เรียก Hooks ทั้งหมดไว้ด้านบนสุด
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
@@ -27,7 +29,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
 
-  // ✅ 2. เช็คเงื่อนไขซ่อน Navbar สำหรับหน้า Login
   if (pathname === "/auth") return null;
 
   return (
@@ -60,8 +61,7 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation Links */}
-        <div className="flex items-center gap-6 md:gap-8">
-          {/* เหลือแค่ Gallery */}
+        <div className="flex items-center gap-4 md:gap-8">
           <Link
             href="/gallery"
             className={`hidden md:block text-[10px] uppercase tracking-[0.2em] transition ${
@@ -71,13 +71,30 @@ export default function Navbar() {
             Gallery
           </Link>
 
-          {/* ปุ่ม Sign In */}
-          <Link
-            href="/auth"
-            className="hidden md:block px-5 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-          >
-            Sign In
-          </Link>
+          {/* 🟢 ส่วนที่ปรับเปลี่ยนตามสถานะ Login */}
+          {isLoggedIn ? (
+            <Link
+              href="/profile"
+              className="group flex items-center gap-3 pl-4 border-l border-white/10"
+            >
+              <div className="text-right hidden sm:block">
+                <p className="text-[9px] font-black text-white leading-none uppercase tracking-widest">ShadowHunter</p>
+                <p className="text-[8px] text-purple-400 font-bold leading-none uppercase mt-1">Lv. 42</p>
+              </div>
+              <div className="relative w-8 h-8 rounded-full border border-white/20 overflow-hidden bg-gradient-to-tr from-purple-500 to-blue-500 p-[1px] group-hover:scale-110 transition-transform">
+                <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] font-black italic text-white">
+                  SH
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="/auth"
+              className="hidden md:block px-5 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            >
+              Sign In
+            </Link>
+          )}
 
           {/* Mobile Button */}
           <button
@@ -99,13 +116,26 @@ export default function Navbar() {
           >
             Full Gallery
           </Link>
-          <Link 
-            href="/auth" 
-            onClick={() => setOpen(false)} 
-            className="w-full py-4 bg-white text-black text-center text-xs font-black rounded-2xl"
-          >
-            Sign In / Register
-          </Link>
+          
+          {/* 🟢 Mobile Login Logic */}
+          {isLoggedIn ? (
+             <Link 
+              href="/profile" 
+              onClick={() => setOpen(false)} 
+              className="flex items-center justify-between w-full py-4 px-6 bg-white/5 border border-white/10 rounded-2xl"
+            >
+              <span className="text-xs font-black">My Profile</span>
+              <span className="text-[10px] text-purple-400 font-bold">LV. 42</span>
+            </Link>
+          ) : (
+            <Link 
+              href="/auth" 
+              onClick={() => setOpen(false)} 
+              className="w-full py-4 bg-white text-black text-center text-xs font-black rounded-2xl"
+            >
+              Sign In / Register
+            </Link>
+          )}
         </div>
       )}
     </header>
