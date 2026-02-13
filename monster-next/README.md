@@ -6,14 +6,17 @@ Welcome to the world of **Monf**, a collection of 6 adorable monsters, each with
 
 ## ✨ Meet the Crew
 
-| Icon | Name | Tagline | Personality |
-| :---: | :--- | :--- | :--- |
-| 🟦 | **BLOOP** | *"Wondering about everything"* | The curious thinker. |
-| 🟥 | **ZEST** | *"Full of energy, heart, and cookies"* | The energetic foodie. |
-| 🟨 | **LUMIN** | *"Collecting wisdom and golden moments"* | The wise bookworm. |
-| 🟪 | **VIBEZ** | *"Find your rhythm in the silence"* | The soulful musician. |
-| 🟩 | **ECHO** | *"Let's talk about the wonders of today"* | The storyteller. |
-| 🟧 | **ORY** | *"Painting dreams into reality"* | The creative artist. |
+| Icon | Name      | Tagline                                    | Personality                |
+| :--: | :-------- | :----------------------------------------- | :------------------------- |
+|  🟦  | **BLOOP** | *"Wondering about everything"*             | The curious thinker.       |
+|  🟥  | **ZEST**  | *"Full of energy, heart, and cookies"*     | The energetic foodie.      |
+|  🟨  | **LUMIN** | *"Collecting wisdom and golden moments"*   | The wise guide.            |
+|  🟪  | **VIBEZ** | *"Find your rhythm in the silence"*        | The soulful dreamer.       |
+|  🟩  | **ECHO**  | *"Let's talk about the wonders of today"*  | The social connector.      |
+|  🟧  | **ORY**   | *"Painting dreams into reality"*           | The visionary creator.     |
+|   ⚫  | **NOVA**  | *"Born from silence, built from stardust"* | The mysterious strategist. |
+|  🟫  | **TERRA** | *"Grounded roots, unshakable will"*        | The resilient guardian.    |
+|  🌸  | **AURA**  | *"Soft light, powerful presence"*          | The empathetic harmonizer. |
 
 ---
 
