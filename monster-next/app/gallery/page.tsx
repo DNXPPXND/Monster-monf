@@ -20,8 +20,8 @@ export default function GalleryPage() {
         
         {/* Header */}
         <header className="mb-20 text-center">
-          <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6">CODEX</h1>
-          <p className="text-gray-500 tracking-[0.2em] uppercase text-sm">Registry of the Ancient Archetypes</p>
+          <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter mb-6">GALLERY</h1>
+          <p className="text-gray-500 tracking-[0.2em] uppercase text-sm">A visual journey through the Monster World</p>
         </header>
 
         {/* Filter Tabs */}
