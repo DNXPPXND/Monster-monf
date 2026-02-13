@@ -14,93 +14,184 @@ export default async function MonsterPage({
   if (!monster) return notFound();
 
   return (
-    <section
-      className={`
-        relative min-h-screen
-        flex items-center justify-center
-        px-6 py-16 md:px-12 md:py-24 overflow-hidden
-        bg-gradient-to-br ${monster.theme}
-        text-white
-      `}
-    >
-      {/* 1. Background Elements (ปรับให้จางลงในมือถือ) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <span className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-[30vw] md:text-[25vw] font-black opacity-[0.02] md:opacity-[0.03] select-none whitespace-nowrap">
-          {monster.name.toUpperCase()}
-        </span>
-        <div className="absolute w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-white/10 blur-[80px] md:blur-[180px] -top-1/4 -right-1/4 rounded-full animate-pulse" />
-      </div>
+    <main className={`min-h-screen bg-slate-950 text-white selection:bg-white selection:text-black`}>
+      {/* Background Layer - ใช้ Gradient ตาม Theme ของ Monster */}
+      <div className={`fixed inset-0 opacity-40 bg-gradient-to-tr ${monster.theme} pointer-events-none`} />
+      <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl w-full flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
-        
-        {/* 2. Visual Spotlight (Top on Mobile, Left on Desktop) */}
-        <div className="relative group w-full flex-1 flex justify-center lg:justify-end order-1 lg:order-1">
-          <div className="absolute inset-0 bg-white/20 blur-[60px] md:blur-[100px] rounded-full scale-75 opacity-50" />
-          
-          <div className="relative transition-all duration-1000 group-hover:scale-105 animate-[float_6s_ease-in-out_infinite]">
-            <Image
-              src={monster.img}
-              alt={monster.name}
-              width={550}
-              height={550}
-              priority
-              className="w-[280px] sm:w-[400px] md:w-[500px] lg:w-[600px] h-auto drop-shadow-2xl object-contain"
-            />
-          </div>
+      {/* 1. HERO SECTION - Cinematic Focus */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 px-6 overflow-hidden">
+        {/* Large Background Text */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none">
+          <h2 className="text-[20vw] font-black leading-none opacity-5 blur-sm tracking-tighter uppercase">
+            {monster.archetype}
+          </h2>
         </div>
 
-        {/* 3. Narrative Content (Bottom on Mobile, Right on Desktop) */}
-        <div className="flex-1 text-center lg:text-left order-2 lg:order-2">
+        <div className="relative z-10 max-w-7xl w-full grid lg:grid-cols-2 gap-12 items-center">
+          {/* Monster Visual */}
+          <div className="relative order-1 lg:order-2 flex justify-center">
+             {/* Glow Effect */}
+            <div className={`absolute w-[80%] h-[80%] rounded-full blur-[120px] opacity-30 animate-pulse bg-gradient-to-r ${monster.theme}`} />
+            
+            <div className="relative group transition-transform duration-700 hover:scale-105">
+              <Image
+                src={monster.img}
+                alt={monster.name}
+                width={700}
+                height={700}
+                priority
+                className="w-full max-w-[500px] lg:max-w-none drop-shadow-[0_35px_35px_rgba(0,0,0,0.5)] transition-all duration-500 drop-shadow-white/10"
+              />
+            </div>
+          </div>
+
+          {/* Core Info */}
+          <div className="order-2 lg:order-1 space-y-8">
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-bold tracking-[0.2em] uppercase">
+                  {monster.element}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] font-bold tracking-[0.2em] uppercase">
+                  {monster.mood}
+                </span>
+              </div>
+              <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-none italic uppercase">
+                {monster.name}
+              </h1>
+              <p className="text-xl md:text-3xl font-light text-white/80 max-w-xl leading-tight">
+                {monster.tagline}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href={`/monster/${id}/about`}
+                className="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden transition-all active:scale-95"
+              >
+                <span className="relative z-10 uppercase">Explore Story</span>
+                <div className="absolute inset-0 bg-slate-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </Link>
+              <Link
+                href="/"
+                className="px-8 py-4 border border-white/20 backdrop-blur-md rounded-full font-bold hover:bg-white/10 transition-all uppercase text-sm flex items-center"
+              >
+                Return to World
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. DATA GRID SECTION - Bento Style */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 py-32 space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           
-          {/* Badge Section (ปรับให้กึ่งกลางในมือถือ) */}
-          <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
-            {[monster.archetype, monster.mood, monster.element].map((tag) => (
-              <span key={tag} className="px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase">
-                {tag}
-              </span>
+          {/* Origin & Lore - Large Tile */}
+          <div className="md:col-span-8 p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl space-y-6">
+            <h3 className="text-4xl font-black italic uppercase tracking-tighter">Origin</h3>
+            <p className="text-xl text-white/70 leading-relaxed font-light italic">
+              &ldquo;{monster.quote}&rdquo;
+            </p>
+            <p className="text-lg text-white/80 leading-relaxed">
+              {monster.lore}
+            </p>
+          </div>
+
+          {/* Stats - Side Tile */}
+          <div className="md:col-span-4 p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl space-y-8">
+            <h3 className="text-2xl font-bold uppercase tracking-widest">Core Stats</h3>
+            <div className="space-y-6">
+              {Object.entries(monster.stats).map(([key, value]) => (
+                <div key={key} className="space-y-2">
+                  <div className="flex justify-between text-xs font-bold uppercase tracking-tighter opacity-60">
+                    <span>{key}</span>
+                    <span>{value}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-white to-white/40 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(255,255,255,0.5)]" 
+                      style={{ width: `${value}%` }} 
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Personality & Inner World - Split Tiles */}
+          <div className="md:col-span-6 p-8 rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 space-y-4">
+             <h3 className="text-2xl font-bold">Psychology</h3>
+             <p className="text-white/70">{monster.personality}</p>
+             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10 text-sm">
+                <div>
+                  <span className="block opacity-40 uppercase text-[10px] font-bold">Strengths</span>
+                  <p>{monster.strengths}</p>
+                </div>
+                <div>
+                  <span className="block opacity-40 uppercase text-[10px] font-bold">Weaknesses</span>
+                  <p>{monster.weaknesses}</p>
+                </div>
+             </div>
+          </div>
+
+          <div className="md:col-span-6 p-8 rounded-3xl bg-white/5 border border-white/10 space-y-4">
+             <h3 className="text-2xl font-bold italic opacity-60">Inner Voice</h3>
+             <p className="text-2xl font-light italic leading-tight text-white/90">
+               &ldquo;{monster.innerVoice}&rdquo;
+             </p>
+             <p className="text-white/60 text-sm">{monster.selfDescription}</p>
+          </div>
+
+          {/* Signature Items - 3 Column Grid */}
+          <div className="md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {monster.signatureItems.map((item) => (
+              <div key={item.name} className="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 transition-all duration-300">
+                <div className="w-10 h-10 mb-4 rounded-lg bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-2 h-2 bg-white rounded-full" />
+                </div>
+                <h4 className="font-bold text-lg mb-1">{item.name}</h4>
+                <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
+              </div>
             ))}
           </div>
 
-          {/* ชื่อมอนสเตอร์ (ปรับขนาดให้ยืดหยุ่นขึ้น) */}
-          <h1 className="text-[clamp(40px,12vw,110px)] font-black tracking-tighter mb-4 leading-[0.9] drop-shadow-2xl">
-            {monster.name}
-          </h1>
+          {/* Life Stages & Compatibility */}
+          <div className="md:col-span-12 p-10 rounded-[3rem] bg-white text-black flex flex-col md:flex-row justify-between items-center gap-12">
+            <div className="flex gap-12">
+              <div>
+                <span className="block text-[10px] font-black uppercase opacity-40 mb-2">Childhood</span>
+                <p className="text-xl font-bold">{monster.lifeStage.child}</p>
+              </div>
+              <div className="w-px h-12 bg-black/10 hidden md:block" />
+              <div>
+                <span className="block text-[10px] font-black uppercase opacity-40 mb-2">Adulthood</span>
+                <p className="text-xl font-bold">{monster.lifeStage.adult}</p>
+              </div>
+            </div>
 
-          <div className="mb-10 space-y-6">
-            <p className="text-lg md:text-2xl font-light text-white/90 leading-snug max-w-lg mx-auto lg:mx-0">
-              {monster.tagline}
-            </p>
-            
-            <div className="w-16 h-1 bg-white/30 mx-auto lg:mx-0 rounded-full" />
-
-            <p className="italic text-base md:text-lg text-white/70 font-light max-w-md mx-auto lg:mx-0 border-l-0 lg:border-l-2 border-white/20 lg:pl-6">
-              “{monster.quote}”
-            </p>
+            <div className="flex flex-col items-end gap-3 text-right">
+               <span className="text-[10px] font-black uppercase opacity-40">Best Compatibility</span>
+               <div className="flex gap-2">
+                {monster.compatibility.map((compatId) => (
+                  <Link
+                    key={compatId}
+                    href={`/monster/${compatId}`}
+                    className="px-4 py-2 bg-black text-white rounded-full text-xs font-bold hover:scale-105 transition active:scale-95 uppercase"
+                  >
+                    {compatId}
+                  </Link>
+                ))}
+               </div>
+            </div>
           </div>
 
-          {/* Action Buttons (Full width ในมือถือ) */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-            <Link
-              href={`/monster/${id}/about`}
-              className="w-full sm:w-auto text-center px-10 py-4 bg-white text-black font-bold rounded-full hover:bg-opacity-90 transition-all active:scale-95"
-            >
-              EXPLORE STORY
-            </Link>
-
-            <Link
-              href="/"
-              className="w-full sm:w-auto text-center px-10 py-4 border border-white/30 rounded-full font-medium hover:bg-white/10 backdrop-blur-sm transition-all active:scale-95"
-            >
-              Back to World
-            </Link>
-          </div>
         </div>
-      </div>
+      </section>
 
-      {/* 4. Scroll Indicator (ซ่อนในมือถือที่จอเตี้ยมากๆ เพื่อไม่ให้ทับเนื้อหา) */}
-      <div className="hidden sm:block absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce opacity-30">
-        <div className="w-[1px] h-10 bg-white" />
-      </div>
-    </section>
+      {/* Bottom Padding */}
+      <div className="h-32" />
+    </main>
   );
 }

@@ -1,10 +1,24 @@
-// 🔹 Type ของ lifeStage
+// ===============================
+// MONF MONSTER DATA SYSTEM
+// ===============================
+
 export interface LifeStage {
   child: string;
   adult: string;
 }
 
-// 🔹 Type หลักของ Monster
+export interface Stat {
+  influence: number;
+  wisdom: number;
+  rarity: number;
+  stability: number;
+}
+
+export interface SignatureItem {
+  name: string;
+  desc: string;
+}
+
 export interface Monster {
   id: string;
   name: string;
@@ -28,11 +42,17 @@ export interface Monster {
   compatibility: string[];
   theme: string;
   img: string;
+  lore: string;
+  stats: Stat;
+  signatureItems: SignatureItem[];
 }
+
+// ===============================
+// MONSTERS RECORD
+// ===============================
 
 export const monsters: Record<string, Omit<Monster, "id">> = {
 
-  // 🔵 BLOOP — Seeker
   bloop: {
     name: "BLOOP",
     archetype: "The Seeker",
@@ -58,9 +78,16 @@ export const monsters: Record<string, Omit<Monster, "id">> = {
     compatibility: ["lumin", "vibez"],
     theme: "from-slate-500 to-blue-900",
     img: "/blue_1.png",
+    lore:
+      "Bloop originated from the deepest pressure of the Silence Ocean. While others swim for survival, Bloop swims for 'Why'. It doesn't just see the water; it calculates the flow of existence. Legend says Bloop once found a sunken library and spent a century reading through the ripples.",
+    stats: { influence: 65, wisdom: 95, rarity: 80, stability: 45 },
+    signatureItems: [
+      { name: "The Infinite Lens", desc: "A droplet that magnifies the truth in any lie." },
+      { name: "Ink of Echoes", desc: "Writing that speaks back to the author." },
+      { name: "Deep-Sea Compass", desc: "Points only toward things worth knowing." }
+    ]
   },
 
-  // 🔴 ZEST — Spark
   zest: {
     name: "ZEST",
     archetype: "The Spark",
@@ -84,11 +111,18 @@ export const monsters: Record<string, Omit<Monster, "id">> = {
       adult: "Inspiring leader.",
     },
     compatibility: ["echo", "ory"],
-    theme: "from-slate-500 to-red-700 ",
+    theme: "from-slate-500 to-red-700",
     img: "/red_1.png",
+    lore:
+      "Zest is the physical manifestation of a dying star's final wish. It carries a relentless heat that doesn't consume, but creates. Where Zest walks, the air vibrates with possibility.",
+    stats: { influence: 88, wisdom: 40, rarity: 75, stability: 30 },
+    signatureItems: [
+      { name: "Ignition Ring", desc: "Turns any movement into a burst of light." },
+      { name: "Sonic Sneakers", desc: "Footwear that leaves trails of warm embers." },
+      { name: "Ever-Burning Torch", desc: "A light that glows brighter when others are afraid." }
+    ]
   },
 
-  // 🟡 LUMIN — Guide
   lumin: {
     name: "LUMIN",
     archetype: "The Guide",
@@ -112,209 +146,277 @@ export const monsters: Record<string, Omit<Monster, "id">> = {
       adult: "Trusted mentor.",
     },
     compatibility: ["bloop", "echo"],
-   // theme: "from-yellow-400 to-orange-600",
-   theme: "from-slate-500 to-yellow-700",
+    theme: "from-slate-500 to-yellow-700",
     img: "/yellow_2.png",
+    lore:
+      "Born from the first ray of dawn after a thousand-year night, Lumin is the steady hand in the storm.",
+    stats: { influence: 92, wisdom: 98, rarity: 85, stability: 90 },
+    signatureItems: [
+      { name: "Lantern of Truth", desc: "Reveals paths that are hidden by fear." },
+      { name: "Elder's Scroll", desc: "A document that updates itself with new wisdom." },
+      { name: "Prism Cloak", desc: "Neutralizes negative energy by breaking it into colors." }
+    ]
   },
-
-  // 🟣 VIBEZ — Dreamer
-  vibez: {
+    vibez: {
     name: "VIBEZ",
-    archetype: "The Dreamer",
-    tagline: "Create through feeling.",
-    personality: "Emotionally intuitive.",
-    mood: "Deep",
-    strengths: "Creativity.",
-    weaknesses: "Sensitive.",
-    hobbies: ["Music", "Poetry"],
+    archetype: "The Pulse Master",
+    tagline: "Feel the frequency of the universe.",
+    personality: "Emotionally intuitive and rhythm-driven.",
+    mood: "Vibing & Electric",
+    strengths: "Emotional awareness, creativity.",
+    weaknesses: "Mood swings.",
+    hobbies: ["Music production", "Night walks", "DJ sessions"],
     element: "Sound",
-    bestMatch: "Artists.",
-    fear: "Silence.",
-    quote: "Feel it first.",
-    selfDescription: "Emotion is power.",
-    innerVoice: "Why so intense?",
-    whenIGrow: "Turns feeling into art.",
-    shadowSide: "Withdraws.",
-    healingPath: "Creative flow.",
+    bestMatch: "Free spirits.",
+    fear: "Silence without meaning.",
+    quote: "Can you feel that?",
+    selfDescription: "I speak in frequencies.",
+    innerVoice: "If the music stops… do I disappear?",
+    whenIGrow: "Masters emotional balance.",
+    shadowSide: "Lost in feelings.",
+    healingPath: "Mindful grounding.",
     lifeStage: {
-      child: "Imaginative.",
-      adult: "Healing artist.",
+      child: "Dances before walking.",
+      adult: "Creates emotional harmony.",
     },
-    compatibility: ["bloop", "ory"],
-    //theme: "from-purple-500 to-indigo-700",
-    theme: "from-slate-500 to-indigo-700",
+    compatibility: ["aura", "zest"],
+    theme: "from-slate-700 to-purple-700",
     img: "/purple.png",
+    lore:
+      "Vibez was born from the first heartbeat of a forming planet. Its body hums with invisible waves, tuning the emotions of everyone nearby.",
+    stats: { influence: 85, wisdom: 70, rarity: 78, stability: 55 },
+    signatureItems: [
+      { name: "Pulse Core", desc: "A crystal that beats in sync with nearby souls." },
+      { name: "Wave Blades", desc: "Invisible arcs of compressed vibration." },
+      { name: "Neon Headset", desc: "Lets Vibez hear hidden emotions." }
+    ]
   },
 
-  // 🟢 ECHO — Connector
   echo: {
     name: "ECHO",
-    archetype: "The Connector",
-    tagline: "Conversations build bridges.",
-    personality: "Friendly and expressive.",
-    mood: "Social",
-    strengths: "Communication.",
-    weaknesses: "Talkative.",
-    hobbies: ["Podcasting", "Cafés"],
-    element: "Air",
-    bestMatch: "Open minds.",
-    fear: "Being unheard.",
-    quote: "Tell me more.",
-    selfDescription: "Voices matter.",
-    innerVoice: "Am I listening?",
-    whenIGrow: "Becomes mindful communicator.",
-    shadowSide: "Avoids silence.",
-    healingPath: "Listening deeply.",
+    archetype: "The Resonance",
+    tagline: "Every shadow has a voice.",
+    personality: "Observant and mysterious.",
+    mood: "Silent & Deep",
+    strengths: "Listening, emotional depth.",
+    weaknesses: "Withdrawn.",
+    hobbies: ["Writing poetry", "Moon watching"],
+    element: "Shadow",
+    bestMatch: "Introspective souls.",
+    fear: "Being forgotten.",
+    quote: "I am what remains.",
+    selfDescription: "I exist between sound and silence.",
+    innerVoice: "Will they remember me?",
+    whenIGrow: "Speaks truths bravely.",
+    shadowSide: "Isolation.",
+    healingPath: "Connection.",
     lifeStage: {
-      child: "Talkative.",
-      adult: "Depth connector.",
+      child: "Quiet observer.",
+      adult: "Voice of hidden truths.",
     },
-    compatibility: ["zest", "lumin"],
-    //theme: "from-green-400 to-emerald-700",
-    theme: "from-slate-500 to-emerald-700",
+    compatibility: ["lumin", "umbra"],
+    theme: "from-slate-800 to-green-900",
     img: "/green_1.png",
+    lore:
+      "Echo formed where forgotten memories gather. It absorbs whispers and turns them into understanding.",
+    stats: { influence: 60, wisdom: 88, rarity: 82, stability: 65 },
+    signatureItems: [
+      { name: "Whisper Cloak", desc: "Turns presence into soft echoes." },
+      { name: "Memory Orb", desc: "Stores fragments of lost voices." },
+      { name: "Silent Dagger", desc: "Cuts without sound." }
+    ]
   },
 
-  // 🟠 ORY — Creator
   ory: {
     name: "ORY",
-    archetype: "The Creator",
-    tagline: "Turn vision into reality.",
-    personality: "Visionary.",
-    mood: "Inspired",
-    strengths: "Builds ideas.",
-    weaknesses: "Doesn’t finish.",
-    hobbies: ["Design", "DIY"],
-    element: "Earth",
-    bestMatch: "Dreamers.",
-    fear: "Creative block.",
-    quote: "Let’s create magic.",
-    selfDescription: "Ideas never stop.",
-    innerVoice: "What if inspiration fades?",
-    whenIGrow: "Disciplined creator.",
-    shadowSide: "Loses focus.",
-    healingPath: "Structure.",
+    archetype: "The Strategist",
+    tagline: "Move smart. Strike precise.",
+    personality: "Calculated and tactical.",
+    mood: "Focused",
+    strengths: "Planning, foresight.",
+    weaknesses: "Over-control.",
+    hobbies: ["Chess", "Mapping systems"],
+    element: "Metal",
+    bestMatch: "Visionaries.",
+    fear: "Chaos.",
+    quote: "Everything has a pattern.",
+    selfDescription: "Logic is my weapon.",
+    innerVoice: "If I lose control, I lose everything.",
+    whenIGrow: "Trusts unpredictability.",
+    shadowSide: "Rigid.",
+    healingPath: "Flexibility.",
     lifeStage: {
-      child: "Inventive.",
-      adult: "Grounded visionary.",
+      child: "Strategic thinker.",
+      adult: "Master planner.",
     },
-    compatibility: ["zest", "vibez"],
-    //theme: "from-orange-400 to-red-600",
-    theme: "from-slate-500 to-orange-700",
+    compatibility: ["royce", "nova"],
+    theme: "from-slate-600 to-orange-800",
     img: "/orange.png",
+    lore:
+      "Forged inside a collapsing machine-city, Ory calculates probabilities faster than light.",
+    stats: { influence: 75, wisdom: 85, rarity: 77, stability: 88 },
+    signatureItems: [
+      { name: "Quantum Map", desc: "Shows branching futures." },
+      { name: "Steel Codex", desc: "Contains tactical doctrines." },
+      { name: "Clockwork Core", desc: "Ticks with perfect precision." }
+    ]
   },
 
-  // ⚙️ NOVA — Engineer
   nova: {
     name: "NOVA",
-    archetype: "The Engineer",
-    tagline: "Everything can be fixed.",
-    personality: "Precise and composed.",
-    mood: "Focused",
-    strengths: "Repair mastery.",
-    weaknesses: "Perfectionist.",
-    hobbies: ["Repairing", "Metal crafting"],
-    element: "Metal",
-    bestMatch: "Strategists.",
-    fear: "Irreparable damage.",
-    quote: "If it's broken, rebuild it.",
-    selfDescription: "I fix worlds.",
-    innerVoice: "Is it perfect yet?",
-    whenIGrow: "Master builder.",
-    shadowSide: "Emotionally closed.",
-    healingPath: "Acceptance.",
+    archetype: "The Awakener",
+    tagline: "Explode into your true self.",
+    personality: "Transformational and fearless.",
+    mood: "Intense",
+    strengths: "Reinvention.",
+    weaknesses: "Impulsive change.",
+    hobbies: ["Sky watching", "Training"],
+    element: "Starfire",
+    bestMatch: "Dreamers ready to evolve.",
+    fear: "Stagnation.",
+    quote: "Burn to become.",
+    selfDescription: "I am rebirth.",
+    innerVoice: "Will I rise again?",
+    whenIGrow: "Becomes stable brilliance.",
+    shadowSide: "Self-destruction.",
+    healingPath: "Patience.",
     lifeStage: {
-      child: "Takes things apart.",
-      adult: "Legendary engineer.",
+      child: "Wild spark.",
+      adult: "Radiant star.",
     },
-    compatibility: ["umbra", "royce"],
-    theme: "from-slate-700 to-gray-400",
+    compatibility: ["zest", "ory"],
+    theme: "from-slate-800 to-gray-700",
     img: "/silver.png",
+    lore:
+      "Nova is born each time a star collapses. It carries endings and beginnings in the same breath.",
+    stats: { influence: 90, wisdom: 72, rarity: 92, stability: 40 },
+    signatureItems: [
+      { name: "Supernova Shard", desc: "Fragment of rebirth energy." },
+      { name: "Flare Armor", desc: "Radiates protective heat." },
+      { name: "Star Mark", desc: "Glows when destiny shifts." }
+    ]
   },
 
-  // ⚔️ UMBRA — Warrior
   umbra: {
     name: "UMBRA",
-    archetype: "The Warrior",
-    tagline: "Strength grows in battle.",
-    personality: "Disciplined fighter.",
-    mood: "Dark",
-    strengths: "Combat mastery.",
-    weaknesses: "Isolation.",
-    hobbies: ["Training", "Strategy"],
-    element: "Void",
-    bestMatch: "Fearless allies.",
+    archetype: "The Guardian of Night",
+    tagline: "Strength in the unseen.",
+    personality: "Protective and stoic.",
+    mood: "Dark Calm",
+    strengths: "Endurance.",
+    weaknesses: "Emotion suppression.",
+    hobbies: ["Night patrol", "Meditation"],
+    element: "Darkness",
+    bestMatch: "Sensitive souls.",
     fear: "Losing control.",
-    quote: "I command the dark.",
-    selfDescription: "Battle is clarity.",
-    innerVoice: "Never lower guard.",
-    whenIGrow: "Fights with purpose.",
-    shadowSide: "Pushes others away.",
-    healingPath: "Trust allies.",
+    quote: "I stand in the dark so you can shine.",
+    selfDescription: "Silence is strength.",
+    innerVoice: "I must not break.",
+    whenIGrow: "Opens emotionally.",
+    shadowSide: "Cold detachment.",
+    healingPath: "Trust.",
     lifeStage: {
-      child: "Protective.",
-      adult: "Shadow legend.",
+      child: "Silent protector.",
+      adult: "Unbreakable shield.",
     },
-    compatibility: ["nova"],
-    theme: "from-slate-800 to-black",
+    compatibility: ["echo", "aura"],
+    theme: "from-slate-900 to-black",
     img: "/black_1.png",
+    lore:
+      "Umbra guards the space between light and void, absorbing chaos before it reaches others.",
+    stats: { influence: 80, wisdom: 84, rarity: 86, stability: 95 },
+    signatureItems: [
+      { name: "Void Shield", desc: "Absorbs hostile energy." },
+      { name: "Night Blade", desc: "Strikes unseen." },
+      { name: "Eclipse Helm", desc: "Masks emotion and fear." }
+    ]
   },
 
-  // 🍳 AURA — Chef
   aura: {
     name: "AURA",
-    archetype: "The Chef",
-    tagline: "Healing through food.",
-    personality: "Warm and caring.",
-    mood: "Comforting",
-    strengths: "Cooking mastery.",
-    weaknesses: "Self-sacrifice.",
-    hobbies: ["Baking", "Tea crafting"],
+    archetype: "The Empath",
+    tagline: "Energy speaks louder than words.",
+    personality: "Sensitive and nurturing.",
+    mood: "Warm",
+    strengths: "Healing presence.",
+    weaknesses: "Energy drain.",
+    hobbies: ["Yoga", "Painting"],
     element: "Spirit",
-    bestMatch: "Warriors.",
-    fear: "Not needed.",
-    quote: "Eat first.",
-    selfDescription: "Food heals.",
-    innerVoice: "Who heals me?",
-    whenIGrow: "Balanced nurturer.",
-    shadowSide: "Neglects self.",
-    healingPath: "Self-love.",
+    bestMatch: "Emotional souls.",
+    fear: "Conflict.",
+    quote: "I feel you.",
+    selfDescription: "I sense the invisible.",
+    innerVoice: "Is this my emotion… or yours?",
+    whenIGrow: "Sets boundaries.",
+    shadowSide: "Self-neglect.",
+    healingPath: "Self-care.",
     lifeStage: {
-      child: "Shares snacks.",
-      adult: "Legendary chef.",
+      child: "Gentle heart.",
+      adult: "Energy healer.",
     },
-    compatibility: ["lumin", "royce"],
-    //theme: "from-pink-400 to-rose-600",
-    theme: "from-slate-500 to-rose-700",
+    compatibility: ["vibez", "umbra"],
+    theme: "from-slate-400 to-pink-500",
     img: "/pink.png",
+    lore:
+      "Aura emerged from the collective breath of living beings. It feels before it thinks.",
+    stats: { influence: 82, wisdom: 86, rarity: 79, stability: 60 },
+    signatureItems: [
+      { name: "Spirit Bloom", desc: "Restores emotional balance." },
+      { name: "Heart Prism", desc: "Amplifies empathy." },
+      { name: "Serenity Veil", desc: "Calms chaotic energy." }
+    ]
   },
 
-  // 🤍 ROYCE — Sovereign (White / Wealth)
   royce: {
     name: "ROYCE",
     archetype: "The Sovereign",
-    tagline: "Wealth creates worlds.",
-    personality: "Elegant strategist.",
-    mood: "Luxury",
-    strengths: "Economic mastery.",
-    weaknesses: "Detached.",
-    hobbies: ["Investing", "Collecting artifacts"],
-    element: "Light",
-    bestMatch: "Empire builders.",
-    fear: "Losing legacy.",
-    quote: "Value is built.",
-    selfDescription: "I build empires.",
-    innerVoice: "Will it last?",
-    whenIGrow: "Wise ruler.",
-    shadowSide: "Materialistic.",
-    healingPath: "Generosity.",
+    tagline: "Rule with elegance.",
+    personality: "Charismatic and refined.",
+    mood: "Confident",
+    strengths: "Leadership and influence.",
+    weaknesses: "Pride.",
+    hobbies: ["Collecting artifacts", "Debates"],
+    element: "Royal Flame",
+    bestMatch: "Ambitious minds.",
+    fear: "Losing authority.",
+    quote: "Command with grace.",
+    selfDescription: "Power is responsibility.",
+    innerVoice: "Am I worthy of the throne?",
+    whenIGrow: "Leads with humility.",
+    shadowSide: "Arrogance.",
+    healingPath: "Humility.",
     lifeStage: {
-      child: "Ambitious.",
-      adult: "Sovereign leader.",
+      child: "Born leader.",
+      adult: "Visionary ruler.",
     },
-    compatibility: ["nova", "aura"],
-    theme: "from-slate-600 to-black",
+    compatibility: ["ory", "lumin"],
+    theme: "from-slate-700 to-black",
     img: "/white.png",
-  },
-
+    lore:
+      "Royce descended from an ancient celestial dynasty. Its presence alone shifts power structures.",
+    stats: { influence: 95, wisdom: 78, rarity: 91, stability: 85 },
+    signatureItems: [
+      { name: "Crown of Embers", desc: "Symbol of earned authority." },
+      { name: "Golden Sigil", desc: "Marks alliances." },
+      { name: "Sovereign Blade", desc: "Cuts through deception." }
+    ]
+  }
 };
+
+// ===============================
+// HELPER FUNCTIONS
+// ===============================
+
+export function getMonster(id: string): Monster | null {
+  const monster = monsters[id];
+  if (!monster) return null;
+
+  return { id, ...monster };
+}
+
+export function getAllMonsters(): Monster[] {
+  return Object.entries(monsters).map(([id, monster]) => ({
+    id,
+    ...monster,
+  }));
+}
