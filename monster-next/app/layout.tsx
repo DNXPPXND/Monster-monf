@@ -9,7 +9,7 @@ const pixelFont = Press_Start_2P({
 });
 
 export const metadata = {
-  title: "Monster App",
+  title: "MONF.",
   description: "My Monster Website",
 };
 
