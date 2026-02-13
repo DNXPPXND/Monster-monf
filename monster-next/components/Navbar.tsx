@@ -3,25 +3,20 @@
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { monsters } from "@/data/monsters";
 
 export default function Navbar() {
-  const params = useParams();
-  const pathname = usePathname(); // ใช้ตรวจสอบว่าอยู่ที่หน้า /gallery หรือไม่
-  const currentId = params?.id as string;
-
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
   const [show, setShow] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
 
-  // 🔥 Scroll Hide / Show logic
+  // ✅ 1. เรียก Hooks ทั้งหมดไว้ด้านบนสุด
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
       if (currentScroll > lastScroll && currentScroll > 80) {
         setShow(false);
-        setDropdown(false); // ปิด dropdown เมื่อ scroll ลง
+        setOpen(false); 
       } else {
         setShow(true);
       }
@@ -31,6 +26,9 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
+
+  // ✅ 2. เช็คเงื่อนไขซ่อน Navbar สำหรับหน้า Login
+  if (pathname === "/auth") return null;
 
   return (
     <header
@@ -44,7 +42,7 @@ export default function Navbar() {
         className="
           mx-auto max-w-7xl
           mt-6
-          px-6 py-4
+          px-6 py-3
           flex justify-between items-center
           rounded-2xl
           bg-black/40
@@ -62,49 +60,24 @@ export default function Navbar() {
         </Link>
 
         {/* Navigation Links */}
-        <div className="flex items-center gap-8">
-          {/* Gallery Link (Desktop) */}
+        <div className="flex items-center gap-6 md:gap-8">
+          {/* เหลือแค่ Gallery */}
           <Link
             href="/gallery"
-            className={`hidden md:block text-xs uppercase tracking-[0.2em] transition ${
+            className={`hidden md:block text-[10px] uppercase tracking-[0.2em] transition ${
               pathname === "/gallery" ? "text-white font-bold" : "text-white/60 hover:text-white"
             }`}
           >
             Gallery
           </Link>
 
-          {/* Desktop Dropdown */}
-          <div className="relative hidden md:block">
-            <button
-              onMouseEnter={() => setDropdown(true)}
-              onClick={() => setDropdown(!dropdown)}
-              className="text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white transition"
-            >
-              Monsters ▾
-            </button>
-
-            {dropdown && (
-              <div 
-                onMouseLeave={() => setDropdown(false)}
-                className="absolute right-0 mt-4 w-48 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/10 p-4 flex flex-col gap-3 shadow-2xl animate-[fadeIn_0.2s_ease]"
-              >
-                {Object.keys(monsters).map((key) => (
-                  <Link
-                    key={key}
-                    href={`/monster/${key}`}
-                    onClick={() => setDropdown(false)}
-                    className={`uppercase text-[10px] tracking-widest transition ${
-                      currentId === key
-                        ? "text-white font-bold"
-                        : "text-white/40 hover:text-white"
-                    }`}
-                  >
-                    {key}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* ปุ่ม Sign In */}
+          <Link
+            href="/auth"
+            className="hidden md:block px-5 py-2 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-full hover:scale-105 transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+          >
+            Sign In
+          </Link>
 
           {/* Mobile Button */}
           <button
@@ -119,31 +92,20 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="md:hidden mt-3 mx-6 rounded-3xl bg-black/95 backdrop-blur-2xl border border-white/10 p-8 flex flex-col gap-6 uppercase text-sm tracking-[0.2em] shadow-2xl animate-[fadeIn_0.3s_ease]">
-          {/* Gallery Link (Mobile) */}
-          <Link
-            href="/gallery"
-            onClick={() => setOpen(false)}
+          <Link 
+            href="/gallery" 
+            onClick={() => setOpen(false)} 
             className={`pb-4 border-b border-white/10 ${pathname === "/gallery" ? "text-white" : "text-white/40"}`}
           >
             Full Gallery
           </Link>
-          
-          <span className="text-[10px] opacity-30 tracking-[0.3em]">Select Monster</span>
-          
-          <div className="grid grid-cols-2 gap-4">
-            {Object.keys(monsters).map((key) => (
-              <Link
-                key={key}
-                href={`/monster/${key}`}
-                onClick={() => setOpen(false)}
-                className={`text-xs ${
-                  currentId === key ? "text-white" : "text-white/40"
-                }`}
-              >
-                {key}
-              </Link>
-            ))}
-          </div>
+          <Link 
+            href="/auth" 
+            onClick={() => setOpen(false)} 
+            className="w-full py-4 bg-white text-black text-center text-xs font-black rounded-2xl"
+          >
+            Sign In / Register
+          </Link>
         </div>
       )}
     </header>
