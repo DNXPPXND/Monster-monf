@@ -63,14 +63,14 @@ export default function Home() {
 
               {/* Main Content Card */}
               <div className="
-                relative h-full p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] 
+                relative h-full p-8 md:p-10 rounded-4xl md:rounded-[3rem] 
                 bg-[#0a0a0a] border border-white/10
                 backdrop-blur-xl transition-all duration-500
                 active:scale-95 md:group-hover:-translate-y-2 overflow-hidden
               ">
                 <div className={`
                   absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                  w-3/4 h-3/4 bg-gradient-to-br ${monster.theme} 
+                  w-3/4 h-3/4 bg-linear-to-br ${monster.theme} 
                   opacity-0 group-hover:opacity-20 blur-[50px] transition-opacity duration-500
                 `} />
 
